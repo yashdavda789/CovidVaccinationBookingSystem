@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VaccinationCenterRepository extends JpaRepository<VaccinationCenter, Integer> {
+    VaccinationCenter findByName(String name);
 }

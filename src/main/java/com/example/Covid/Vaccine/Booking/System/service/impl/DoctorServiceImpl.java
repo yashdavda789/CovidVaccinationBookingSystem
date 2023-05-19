@@ -4,6 +4,7 @@ import com.example.Covid.Vaccine.Booking.System.dto.RequestDto.DoctorRequestDto;
 import com.example.Covid.Vaccine.Booking.System.dto.ResponseDto.CenterResponseDto;
 import com.example.Covid.Vaccine.Booking.System.dto.ResponseDto.DoctorResponseDto;
 import com.example.Covid.Vaccine.Booking.System.exception.CenterNotFoundException;
+import com.example.Covid.Vaccine.Booking.System.exception.DoctorNotFoundException;
 import com.example.Covid.Vaccine.Booking.System.model.Doctor;
 import com.example.Covid.Vaccine.Booking.System.model.VaccinationCenter;
 import com.example.Covid.Vaccine.Booking.System.repository.DoctorRepository;
@@ -14,6 +15,8 @@ import com.example.Covid.Vaccine.Booking.System.transformer.VaccinationCenterTra
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +46,28 @@ public class DoctorServiceImpl implements DoctorService {
 
         // ResponseDto -> Entity
         return DoctorTransformer.DoctorToDoctorResponseDto(doctor);
+    }
+
+    @Override
+    public List<String> getDoctorByAgeGreaterThan(int age) throws DoctorNotFoundException {
+        List<Doctor> doctors = doctorRepository.findAll();
+        if(doctors == null) {
+            throw new DoctorNotFoundException("Doctor doesn't exist !!");
+        }
+        List<String> list = new ArrayList<>();
+        for(Doctor doctor : doctors) {
+            if(doctor.getAge() > age) list.add(doctor.getName());
+        }
+        return list;
+    }
+
+    @Override
+    public int getAppointments(String name) throws DoctorNotFoundException {
+        Doctor doctor = doctorRepository.findByName(name);
+        if(doctor == null) {
+            throw new DoctorNotFoundException("No Appointments !!");
+        }
+        int numberOfAppointments = doctor.getAppointments().size();
+        return numberOfAppointments;
     }
 }

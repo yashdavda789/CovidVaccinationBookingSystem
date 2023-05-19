@@ -15,12 +15,8 @@ import com.example.Covid.Vaccine.Booking.System.service.Dose1Service;
 import com.example.Covid.Vaccine.Booking.System.service.Dose2Service;
 import com.example.Covid.Vaccine.Booking.System.transformer.VaccinationCenterTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +32,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     Dose1Service dose1Service;
     @Autowired
     Dose2Service dose2Service;
+
 //    @Autowired
 //    private JavaMailSender emailSender;
 
